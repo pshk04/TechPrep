@@ -1,5 +1,7 @@
 package DynamicProgramming.AlgorithmicThinking;
 
+import java.util.Arrays;
+
 public class BurgerFervor {
     public static long totalCalls;
 
@@ -57,7 +59,7 @@ public class BurgerFervor {
         totalCalls = 0l;
         int result = 0, i = 0;
         String minutesString = "";
-        int[] memo = new int[10000];
+        int[] memo = new int[100];
 
         for(int j = 0 ; j <= t; j++){
             memo[j] = -2;
@@ -83,7 +85,7 @@ public class BurgerFervor {
         totalCalls = 0l;
         int result = 0, first = 0, second = 0, i = 0;
         String minutesString = "";
-        int[] dp = new int[10000];
+        int[] dp = new int[100];
         dp[0] = 0;
 
         for(i = 1 ; i <= t; i++){
@@ -104,12 +106,12 @@ public class BurgerFervor {
             }else{
                 dp[i] = Math.max(first, second) + 1;
             }
-
         }
-
+        System.out.println(Arrays.toString(dp));
         result = dp[t];
         if(result >= 0){
             System.out.println("Homer can eat exactly "+result+" burgers in "+t+" minutes");
+            printOptimalSolution(m,n,dp,t);
         }else{
             i = t - 1;
             result = dp[i];
@@ -119,8 +121,30 @@ public class BurgerFervor {
             }
             minutesString = ((t-i) > 1) ? (t-i) + " minutes" : "a minute";
             System.out.println("Homer can eat "+result +" burgers and drink beer for "+ minutesString + " in "+t+" minutes");
+            printOptimalSolution(m,n,dp,i);
         }
         System.out.println("totalCalls made: "+totalCalls);
     }
 
+    public static void printOptimalSolution(int m, int n, int[] dp, int minutes){
+        int first, second;
+        while(minutes > 0){
+            first = -1;
+            second = -1;
+
+            if(minutes >= m){
+                first = dp[minutes - m];
+            }
+            if(minutes >= n){
+                second = dp[minutes - n];
+            }
+            if(first >= second){
+                System.out.println("Eat a "+m+" minute burger");
+                minutes = minutes - m;
+            }else{
+                System.out.println("Eat a "+n+" minute burger");
+                minutes = minutes - n;
+            }
+        }
+    }
 }
