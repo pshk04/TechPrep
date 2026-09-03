@@ -2,7 +2,7 @@ package Sorting;
 
 import java.util.*;
 
-public class LogFileParsingAndFrequencyAnalysis {
+public class LogFileParsingAndFrequencyAnalysis_INCOMPLETE {
 
     public static void main(String[] args) {
         List<List<Object>> logsList = new ArrayList<>();
